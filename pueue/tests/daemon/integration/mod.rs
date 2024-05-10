@@ -3,6 +3,7 @@ mod aliases;
 mod clean;
 mod edit;
 mod environment_variables;
+mod fork;
 mod group;
 mod kill;
 mod log;
