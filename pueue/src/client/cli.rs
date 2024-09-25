@@ -520,6 +520,38 @@ https://github.com/Nukesor/pueue/issues/350#issue-1359083118"
         #[arg(value_hint = ValueHint::DirPath)]
         output_directory: Option<PathBuf>,
     },
+
+    /// Operations
+    Task {
+        #[command(subcommand)]
+        cmd: Option<TaskCommand>,
+    },
+}
+
+#[derive(Parser, Debug)]
+pub enum TaskCommand {
+    /// Remove a group by name.
+    /// This will move all tasks in this group to the default group!
+    Env {
+        #[command(subcommand)]
+        cmd: Option<TaskEnvCommand>,
+    },
+}
+
+#[derive(Parser, Debug)]
+pub enum TaskEnvCommand {
+    /// Remove a group by name.
+    /// This will move all tasks in this group to the default group!
+    Set {
+        task_id: usize,
+        name: String,
+        value: String,
+    },
+    Get {
+        task_id: usize,
+        name: String,
+        value: String,
+    },
 }
 
 #[derive(Parser, Debug)]
@@ -533,10 +565,6 @@ pub enum GroupCommand {
         #[arg(short, long)]
         parallel: Option<usize>,
     },
-
-    /// Remove a group by name.
-    /// This will move all tasks in this group to the default group!
-    Remove { name: String },
 }
 
 #[derive(Parser, ValueEnum, Debug, Clone, PartialEq, Eq)]
